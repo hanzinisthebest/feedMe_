@@ -3,31 +3,34 @@ const Meal=require('../models/meals')
 const asyncHandler=require('express-async-handler')
 
 const getMeals=asyncHandler(async(req,res)=>{
-  await Meal.deleteMany({})
+  //await Meal.deleteMany({})
   const recips=await Meal.find()
     res.status(200).json(recips)
   })
 
-const randomAct=(arr)=>{
-  if(!arr.length){ 
-    return res.status(200).send(arr)
+  const randomAct=(arr)=>{
+    if(!arr.length){ 
+      return arr
+    }
+    else if(arr.length==1){ 
+      return arr[0]
+    }
+    return arr[random.int((min = 0), (max = arr.length-1))]
   }
-    return res.status(200).json(arr[random.int((min = 0), (max = dinner.length-1))])
-}
-const getRandomDinner=asyncHandler( async(req,res)=>{
-  const dinner=await Meal.find({typeMeal:"dinner"})  
-  randomAct(dinner)
-   })
-
-const getRandomLunch=asyncHandler(async(req,res)=>{
-  const lunch=await Meal.find({typeMeal:"lunch"})  
-  randomAct(lunch)
-})
-
-const getRandomBrakfaset=asyncHandler(async(req,res)=>{
-const brakfaset=await Meal.find({typeMeal:"brakfaset"})  
-randomAct(brakfaset)
-})
+  const getRandomDinner=asyncHandler( async(req,res)=>{
+    const dinner=await Meal.find({typeMeal:"dinner"})  
+    res.status(200).json(randomAct(dinner))
+     })
+  
+  const getRandomLunch=asyncHandler(async(req,res)=>{
+    const lunch=await Meal.find({typeMeal:"lunch"})  
+    res.status(200).json(randomAct(lunch))
+  })
+  
+  const getRandomBrakfaset=asyncHandler(async(req,res)=>{
+  const brakfaset=await Meal.find({typeMeal:"brakfaset"})  
+  res.status(200).json(randomAct(brakfaset))
+  })
 
 /*const create=async(meal,name)=>{
   const recp= await Meal.create({

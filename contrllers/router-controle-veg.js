@@ -1,3 +1,4 @@
+
 const random = require('random')
 const mealVeg=require('../models/meals-veg')
 const asyncHandler=require('express-async-handler')
@@ -10,23 +11,26 @@ const getMeals=asyncHandler(async(req,res)=>{
 
 const randomAct=(arr)=>{
   if(!arr.length){ 
-    return res.status(200).send(arr)
+    return arr
   }
-    return res.status(200).json(arr[random.int((min = 0), (max = dinner.length-1))])
+  else if(arr.length==1){ 
+    return arr[0]
+  }
+  return arr[random.int((min = 0), (max = arr.length-1))]
 }
 const getRandomDinner=asyncHandler( async(req,res)=>{
   const dinner=await mealVeg.find({typeMeal:"dinner"})  
-  randomAct(dinner)
+  res.status(200).json(randomAct(dinner))
    })
 
 const getRandomLunch=asyncHandler(async(req,res)=>{
   const lunch=await mealVeg.find({typeMeal:"lunch"})  
-  randomAct(lunch)
+  res.status(200).json(randomAct(lunch))
 })
 
 const getRandomBrakfaset=asyncHandler(async(req,res)=>{
 const brakfaset=await mealVeg.find({typeMeal:"brakfaset"})  
-randomAct(brakfaset)
+res.status(200).json(randomAct(brakfaset))
 })
 
 /*const create=async(meal,name)=>{
@@ -112,7 +116,7 @@ const deleteRec=asyncHandler(async(req,res)=>{
   })
   
   const mistake= (req, res) => {
-    res.status(404).send('resource not found')
+    res.status(404).send('resource not finded')
   }
 
   module.exports={

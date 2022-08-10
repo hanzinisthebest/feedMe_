@@ -7,7 +7,7 @@ connectDb()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api/meal',require('./routes/route-meal'))
-app.use('/api/meal/veg',require('./routes/route-meal-veg'))
+app.use('/api/veg',require('./routes/route-meal-veg'))
 app.listen(5000, () => {
     console.log('Server is listening on port 5000....')
   })
